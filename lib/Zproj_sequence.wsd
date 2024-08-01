@@ -1,0 +1,61 @@
+@startuml
+skin rose
+title SpaceShipBattle Sequence Diagram
+
+actor Pemain
+boundary "Layar Mobile" as GUI
+control Game
+entity Pesawat_Pemain
+entity Peluru
+entity Pesawat_Musuh
+database Dasbor
+
+Pemain -> GUI : Buka Game
+activate GUI
+GUI -> Game : Pilih Mulai Game
+activate Game
+Game -> Pesawat_Pemain : Pilih Pesawat
+activate Pesawat_Pemain
+return  id_Pesawat
+return Tampilkan ke Layar
+
+GUI -> Game : Pilih Kontrol Game
+activate Game
+Game -> Peluru : Tembak Peluru
+activate Peluru
+Peluru -> Pesawat_Musuh : Hancur
+activate Pesawat_Musuh
+Pesawat_Musuh -> Dasbor : Tambah Poin
+activate Dasbor
+return Pesawat Musuh Hilang
+return Peluru Hilang
+return Posisi Pesawat Pemain
+return Tampilkan ke layar
+
+GUI -> Game : Pilih Kontrol Game
+activate Game
+Game -> Pesawat_Musuh : Tabrakan
+activate Pesawat_Musuh
+Pesawat_Musuh -> Dasbor : Kurangi Daya Hidup
+activate Dasbor
+return Pesawat Musuh Hilang
+return Pesawat Pemain Hilang
+return Tampilkan ke layar
+
+GUI -> Game : Pilih Kontrol Game
+activate Game
+Game -> Pesawat_Pemain : Bergerak
+activate Pesawat_Pemain
+return Arah gerak
+return Tampilkan ke layar
+
+GUI -> Game : Pilih Kontrol Game
+activate Game
+Game -> Dasbor : Pause
+activate Dasbor
+return Simpan Data
+return Tampilkan ke layar
+
+return Keluar Game
+
+@enduml

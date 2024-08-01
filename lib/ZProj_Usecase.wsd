@@ -1,0 +1,49 @@
+@startuml
+
+title UseCase Diagram
+
+skin rose
+
+left to right direction
+actor :Pemain: as Pemain
+
+rectangle SpaceShipBattle_Game {
+  usecase "Setting Suara dan Music" as Setting
+  usecase "Pilih Pesawat" as Pilih_Pesawat
+  usecase "Beli Pesawat" as Beli_Pesawat
+  usecase "Play Game" as Play_Game
+  usecase "Gerak Pesawat" as Gerak_Pesawat
+  usecase "Tembak Peluru" as Tembak_Peluru 
+  usecase "Pause Game" as Pause 
+  usecase "Resume Game" as Resume
+  usecase "Keluar Game" as Keluar  
+  usecase "Cek Daya Hidup" as Cek_Daya_Hidup
+  usecase "Update Daya Hidup" as Update_Daya_Hidup
+  usecase "Update Poin" as Update_Poin
+
+  usecase "Buat Pesawat Musuh" as Buat_Pesawat_Musuh
+  usecase "Buat Kekuatan Tambahan" as Buat_Kekuatan_Tambahan
+
+}
+
+Pemain -- Setting
+Pemain -- Pilih_Pesawat
+
+Pilih_Pesawat <-down- Play_Game
+Pilih_Pesawat <-right- Beli_Pesawat
+Play_Game ..> Cek_Daya_Hidup : <<include>>
+Play_Game <-- Update_Daya_Hidup
+Play_Game <-- Update_Poin
+Play_Game <-- Gerak_Pesawat
+Play_Game <-- Tembak_Peluru
+Play_Game <-- Pause
+Pause <-- Resume
+Pause <-- Keluar
+Cek_Daya_Hidup <.. Keluar : <<extend>>
+
+Play_Game <-- Buat_Pesawat_Musuh
+Play_Game <-- Buat_Kekuatan_Tambahan
+
+
+
+@enduml

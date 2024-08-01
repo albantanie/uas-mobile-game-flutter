@@ -1,0 +1,139 @@
+@startuml
+
+skin rose
+title Class Diagram
+Class Flutter
+Class FlameGame 
+class Sprite
+Flutter <|-down- FlameGame : Inheritance
+FlameGame <|- Sprite : Inheritance
+class SpaceShipBattleGame
+ {
+  {static} +String description
+  +Timer Timer
+  +TextPaint shipAngleTextPaint
+  +void onLoad()
+  +void update()
+  +void onTapUp() 
+}
+FlameGame <|-left SpaceShipBattleGame : Inheritance
+
+
+abstract class SpaceShip {
+  {static} +double defaultSpeed
+  {static} +double defaultMaxSpeed
+  {static} +int defaultDamage
+  {static} +int defaultHealth
+  {static} +Vector2 defaultSize
+  -Vector2 _velocity
+  -double _speed
+  -int? _health
+  -int? _damage
+  {static} -Paint _paint
+  +void onCreate()
+  +void onDestroy()
+  +void onHit()
+  +Vector2 getNextPosition()
+}
+Sprite <|-up- SpaceShip : Inheritance
+class SimpleSpaceShip {
+  {static} +double defaultSpeed
+  {static} +Vector2 defaultSize
+  {static} -Paint _paint
+  +void onLoad()
+  +void update()
+  +void onCreate()
+  +void onDestroy()
+  +void onHit()
+}
+SpaceShip <|- SimpleSpaceShip: Inheritance
+
+
+abstract class Bullet {
+  {static} +double defaultSpeed
+  {static} +int defaultDamage
+  {static} +int defaultHealth
+  {static} +Vector2 defaulSize
+  -Vector2 _velocity
+  -double _speed
+  -int? _health
+  -int? _damage
+  +int? getDamage
+  +int? getHealth
+  +void update()
+  +void onCreate()
+  +void onDestroy()
+  +void onHit()
+  -void _onOutOfBounds()
+}
+Sprite <|- Bullet : Inheritance
+class SlowBullet {
+  {static} +double defaultSpeed
+  {static} +Vector2 defaultSize
+  {static} -Paint _paint
+  +void onLoad()
+  +void render()
+  +void update()
+  +void onCreate()
+  +void onDestroy()
+  +void onHit()
+}
+class FastBullet {
+  {static} +double defaultSpeed
+  {static} +Vector2 defaultSize
+  {static} -Paint _paint
+  +void onLoad()
+  +void render()
+  +void update()
+  +void onCreate()
+  +void onDestroy()
+  +void onHit()
+}
+Bullet <|- FastBullet: Inheritance
+Bullet <|-down- SlowBullet: Inheritance
+
+
+class Enemy {
+  +EnemyData enemyData
+  -double _speed
+  -Timer _freezeTimer
+  -Random _random  
+  -int _hitPoints
+  {static} -Paint _pain
+  +Vector2 getRandomVector()
+  +void onLoad()
+  +void onCollision()
+  +void destroy()
+  +void update()
+  +void freeze()
+}
+Sprite <|-down- Enemy : Inheritance
+class EnemyData {
+  +double speed
+  +int spriteId
+  +int level
+  +bool hMove
+  +int killPoint
+}
+Enemy "1" *-left- "many" EnemyData: Composition
+
+
+Class Score {
+  +string player
+  +int level
+  +int Point
+  +void getScore()
+  +void setScore()
+  +void updateScore()
+}
+SpaceShipBattleGame <|-down- Score : Inheritance
+
+Class Setting {
+  +Int backSound
+  +Int soundFx
+  +void getSet()
+  +void setSet()
+}
+SpaceShipBattleGame "1" -up-* "1" Setting: Composition
+
+@enduml

@@ -1,0 +1,815 @@
+@startuml
+set namespaceSeparator ::
+
+abstract class "component_001::asteroid.dart::Asteroid" {
+  {static} +double defaultSpeed
+  {static} +int defaultDamage
+  {static} +int defaultHealth
+  {static} +Vector2 defaultSize
+  -Vector2 _velocity
+  -double _speed
+  -int? _health
+  -int? _damage
+  -Vector2 _resolutionMultiplier
+  +int? getDamage
+  +int? getHealth
+  +Vector2 getVelocity
+  +void onCollision()
+  +void onCreate()
+  +void onDestroy()
+  +void onHit()
+  +bool canBeSplit()
+  +List<AsteroidEnum> getSplitAsteroids()
+  +Vector2 getNextPosition()
+  +String toString()
+}
+
+"component_001::asteroid.dart::Asteroid" o-- "vector_math::vector_math_64.dart::Vector2"
+"flame::src::components::position_component.dart::PositionComponent" <|-- "component_001::asteroid.dart::Asteroid"
+"flame::src::components::mixins::hitbox.dart::HasHitboxes" <|-- "component_001::asteroid.dart::Asteroid"
+"flame::src::components::mixins::collidable.dart::Collidable" <|-- "component_001::asteroid.dart::Asteroid"
+"flame::src::components::mixins::has_game_ref.dart::HasGameRef" <|-- "component_001::asteroid.dart::Asteroid"
+
+class "component_001::asteroid.dart::SmallAsteroid" {
+  {static} +double defaultSpeed
+  {static} +Vector2 defaultSize
+  {static} -Paint _paint
+  +dynamic onLoad()
+  +void render()
+  +void update()
+  +void onCreate()
+  +void onDestroy()
+  +void onHit()
+}
+
+"component_001::asteroid.dart::SmallAsteroid" o-- "vector_math::vector_math_64.dart::Vector2"
+"component_001::asteroid.dart::SmallAsteroid" o-- "dart::ui::Paint"
+"component_001::asteroid.dart::Asteroid" <|-- "component_001::asteroid.dart::SmallAsteroid"
+
+class "component_001::asteroid.dart::MediumAsteroid" {
+  {static} +double defaultSpeed
+  {static} +Vector2 defaultSize
+  {static} -Paint _paint
+  +dynamic onLoad()
+  +void render()
+  +void update()
+  +void onCreate()
+  +void onDestroy()
+  +void onHit()
+  +List<AsteroidEnum> getSplitAsteroids()
+}
+
+"component_001::asteroid.dart::MediumAsteroid" o-- "vector_math::vector_math_64.dart::Vector2"
+"component_001::asteroid.dart::MediumAsteroid" o-- "dart::ui::Paint"
+"component_001::asteroid.dart::Asteroid" <|-- "component_001::asteroid.dart::MediumAsteroid"
+
+class "component_001::asteroid.dart::LargeAsteroid" {
+  {static} +double defaultSpeed
+  {static} +Vector2 defaultSize
+  {static} -Paint _paint
+  +dynamic onLoad()
+  +void render()
+  +void update()
+  +void onCreate()
+  +void onDestroy()
+  +void onHit()
+  +List<AsteroidEnum> getSplitAsteroids()
+}
+
+"component_001::asteroid.dart::LargeAsteroid" o-- "vector_math::vector_math_64.dart::Vector2"
+"component_001::asteroid.dart::LargeAsteroid" o-- "dart::ui::Paint"
+"component_001::asteroid.dart::Asteroid" <|-- "component_001::asteroid.dart::LargeAsteroid"
+
+class "component_001::asteroid.dart::AsteroidFactory" {
+  {static} +Asteroid create()
+}
+
+class "component_001::asteroid.dart::AsteroidBuildContext" {
+  {static} +double defaultSpeed
+  {static} +int defaultHealth
+  {static} +int defaultDamage
+  {static} +Vector2 deaultVelocity
+  {static} +Vector2 deaultPosition
+  {static} +Vector2 defaultSize
+  {static} +AsteroidEnum defaultAsteroidType
+  {static} +Vector2 defaultMultiplier
+  +double speed
+  +Vector2 velocity
+  +Vector2 position
+  +Vector2 size
+  +int health
+  +int damage
+  +Vector2 multiplier
+  +AsteroidEnum asteroidType
+  {static} +AsteroidEnum asteroidFromString()
+  +String toString()
+}
+
+"component_001::asteroid.dart::AsteroidBuildContext" o-- "vector_math::vector_math_64.dart::Vector2"
+"component_001::asteroid.dart::AsteroidBuildContext" o-- "component_001::asteroid.dart::AsteroidEnum"
+
+class "component_001::asteroid.dart::AsteroidEnum" {
+  +int index
+  {static} +List<AsteroidEnum> values
+  {static} +AsteroidEnum largeAsteroid
+  {static} +AsteroidEnum mediumAsteroid
+  {static} +AsteroidEnum smallAsteroid
+}
+
+"component_001::asteroid.dart::AsteroidEnum" o-- "component_001::asteroid.dart::AsteroidEnum"
+"dart::core::Enum" <|-- "component_001::asteroid.dart::AsteroidEnum"
+
+abstract class "component_001::bullet.dart::Bullet" {
+  {static} +double defaultSpeed
+  {static} +int defaultDamage
+  {static} +int defaultHealth
+  {static} +Vector2 defaulSize
+  -Vector2 _velocity
+  -double _speed
+  -int? _health
+  -int? _damage
+  +int? getDamage
+  +int? getHealth
+  +void update()
+  +void onCreate()
+  +void onDestroy()
+  +void onHit()
+  -void _onOutOfBounds()
+}
+
+"component_001::bullet.dart::Bullet" o-- "vector_math::vector_math_64.dart::Vector2"
+"flame::src::components::position_component.dart::PositionComponent" <|-- "component_001::bullet.dart::Bullet"
+"flame::src::components::mixins::has_game_ref.dart::HasGameRef" <|-- "component_001::bullet.dart::Bullet"
+"flame::src::components::mixins::hitbox.dart::HasHitboxes" <|-- "component_001::bullet.dart::Bullet"
+"flame::src::components::mixins::collidable.dart::Collidable" <|-- "component_001::bullet.dart::Bullet"
+
+class "component_001::bullet.dart::FastBullet" {
+  {static} +double defaultSpeed
+  {static} +Vector2 defaultSize
+  {static} -Paint _paint
+  +dynamic onLoad()
+  +void render()
+  +void update()
+  +void onCreate()
+  +void onDestroy()
+  +void onHit()
+}
+
+"component_001::bullet.dart::FastBullet" o-- "vector_math::vector_math_64.dart::Vector2"
+"component_001::bullet.dart::FastBullet" o-- "dart::ui::Paint"
+"component_001::bullet.dart::Bullet" <|-- "component_001::bullet.dart::FastBullet"
+
+class "component_001::bullet.dart::SlowBullet" {
+  {static} +double defaultSpeed
+  {static} +Vector2 defaultSize
+  {static} -Paint _paint
+  +dynamic onLoad()
+  +void render()
+  +void update()
+  +void onCreate()
+  +void onDestroy()
+  +void onHit()
+}
+
+"component_001::bullet.dart::SlowBullet" o-- "vector_math::vector_math_64.dart::Vector2"
+"component_001::bullet.dart::SlowBullet" o-- "dart::ui::Paint"
+"component_001::bullet.dart::Bullet" <|-- "component_001::bullet.dart::SlowBullet"
+
+class "component_001::bullet.dart::BulletFactory" {
+  {static} +Bullet create()
+}
+
+class "component_001::bullet.dart::BulletBuildContext" {
+  {static} +double defaultSpeed
+  {static} +int defaultHealth
+  {static} +int defaultDamage
+  {static} +Vector2 deaultVelocity
+  {static} +Vector2 deaultPosition
+  {static} +Vector2 defaultSize
+  {static} +BulletEnum defaultBulletType
+  +double speed
+  +Vector2 velocity
+  +Vector2 position
+  +Vector2 size
+  +int health
+  +int damage
+  +BulletEnum bulletType
+}
+
+"component_001::bullet.dart::BulletBuildContext" o-- "vector_math::vector_math_64.dart::Vector2"
+"component_001::bullet.dart::BulletBuildContext" o-- "component_001::bullet.dart::BulletEnum"
+
+class "component_001::bullet.dart::BulletEnum" {
+  +int index
+  {static} +List<BulletEnum> values
+  {static} +BulletEnum slowBullet
+  {static} +BulletEnum fastBullet
+}
+
+"component_001::bullet.dart::BulletEnum" o-- "component_001::bullet.dart::BulletEnum"
+"dart::core::Enum" <|-- "component_001::bullet.dart::BulletEnum"
+
+class "component_001::command.dart::Broker" {
+  -List<Command> _commandList
+  -List<Command> _pendingCommandList
+  -List<Command> _duplicatesWatcher
+  +void addCommand()
+  +void process()
+}
+
+abstract class "component_001::command.dart::Command" {
+  -Controller _controller
+  -Controller _getController()
+  +void addToController()
+  +void execute()
+  +String getTitle()
+  +String getId()
+  +bool mustBeUnique()
+}
+
+"component_001::command.dart::Command" o-- "component_001::controller.dart::Controller"
+
+class "component_001::command.dart::UserTapUpCommand" {
+  +SpaceShip player
+  +void execute()
+  +String getTitle()
+}
+
+"component_001::command.dart::UserTapUpCommand" o-- "component_001::spaceship.dart::SpaceShip"
+"component_001::command.dart::Command" <|-- "component_001::command.dart::UserTapUpCommand"
+
+class "component_001::command.dart::BulletFiredCommand" {
+  +void execute()
+  +String getTitle()
+}
+
+"component_001::command.dart::Command" <|-- "component_001::command.dart::BulletFiredCommand"
+
+class "component_001::command.dart::BulletDestroyCommand" {
+  +Bullet targetBullet
+  +void execute()
+  +String getTitle()
+}
+
+"component_001::command.dart::BulletDestroyCommand" o-- "component_001::bullet.dart::Bullet"
+"component_001::command.dart::Command" <|-- "component_001::command.dart::BulletDestroyCommand"
+
+class "component_001::command.dart::BulletFiredSoundCommand" {
+  +void execute()
+  +String getTitle()
+}
+
+"component_001::command.dart::Command" <|-- "component_001::command.dart::BulletFiredSoundCommand"
+
+class "component_001::command.dart::BulletCollisionCommand" {
+  +Bullet targetBullet
+  +Collidable collisionObject
+  +void execute()
+  +String getTitle()
+  +String getId()
+  +bool mustBeUnique()
+}
+
+"component_001::command.dart::BulletCollisionCommand" o-- "component_001::bullet.dart::Bullet"
+"component_001::command.dart::BulletCollisionCommand" o-- "flame::src::components::mixins::collidable.dart::Collidable"
+"component_001::command.dart::Command" <|-- "component_001::command.dart::BulletCollisionCommand"
+
+class "component_001::command.dart::AsteroidCollisionCommand" {
+  -Asteroid _targetAsteroid
+  -Collidable _collisionObject
+  -Vector2? _collisionPosition
+  +void execute()
+  +String getTitle()
+}
+
+"component_001::command.dart::AsteroidCollisionCommand" o-- "component_001::asteroid.dart::Asteroid"
+"component_001::command.dart::AsteroidCollisionCommand" o-- "flame::src::components::mixins::collidable.dart::Collidable"
+"component_001::command.dart::AsteroidCollisionCommand" o-- "vector_math::vector_math_64.dart::Vector2"
+"component_001::command.dart::Command" <|-- "component_001::command.dart::AsteroidCollisionCommand"
+
+class "component_001::command.dart::UpdateScoreboardShotFiredCommand" {
+  -ScoreBoard _scoreboard
+  +void execute()
+  +String getTitle()
+}
+
+"component_001::command.dart::UpdateScoreboardShotFiredCommand" o-- "component_001::scoreboard.dart::ScoreBoard"
+"component_001::command.dart::Command" <|-- "component_001::command.dart::UpdateScoreboardShotFiredCommand"
+
+class "component_001::command.dart::UpdateScoreboardScoreCommand" {
+  -ScoreBoard _scoreboard
+  +void execute()
+  +String getTitle()
+}
+
+"component_001::command.dart::UpdateScoreboardScoreCommand" o-- "component_001::scoreboard.dart::ScoreBoard"
+"component_001::command.dart::Command" <|-- "component_001::command.dart::UpdateScoreboardScoreCommand"
+
+class "component_001::command.dart::UpdateScoreboardLevelInfoCommand" {
+  -ScoreBoard _scoreboard
+  +void execute()
+  +String getTitle()
+}
+
+"component_001::command.dart::UpdateScoreboardLevelInfoCommand" o-- "component_001::scoreboard.dart::ScoreBoard"
+"component_001::command.dart::Command" <|-- "component_001::command.dart::UpdateScoreboardLevelInfoCommand"
+
+class "component_001::command.dart::UpdateScoreboardTimePassageInfoCommand" {
+  -ScoreBoard _scoreboard
+  +void execute()
+  +String getTitle()
+}
+
+"component_001::command.dart::UpdateScoreboardTimePassageInfoCommand" o-- "component_001::scoreboard.dart::ScoreBoard"
+"component_001::command.dart::Command" <|-- "component_001::command.dart::UpdateScoreboardTimePassageInfoCommand"
+
+class "component_001::command.dart::PlayerCollisionCommand" {
+  +SpaceShip targetPlayer
+  +Collidable collisionObject
+  +void execute()
+  +String getTitle()
+}
+
+"component_001::command.dart::PlayerCollisionCommand" o-- "component_001::spaceship.dart::SpaceShip"
+"component_001::command.dart::PlayerCollisionCommand" o-- "flame::src::components::mixins::collidable.dart::Collidable"
+"component_001::command.dart::Command" <|-- "component_001::command.dart::PlayerCollisionCommand"
+
+class "component_001::command.dart::PlayerRemoveLifeCommand" {
+  +void execute()
+  +String getTitle()
+}
+
+"component_001::command.dart::Command" <|-- "component_001::command.dart::PlayerRemoveLifeCommand"
+
+class "component_001::command.dart::GameOverCommand" {
+  +void execute()
+  +String getTitle()
+}
+
+"component_001::command.dart::Command" <|-- "component_001::command.dart::GameOverCommand"
+
+class "component_001::command.dart::GameBonusDestroyCommand" {
+  +GameBonus targetBonus
+  +void execute()
+  +String getTitle()
+}
+
+"component_001::command.dart::GameBonusDestroyCommand" o-- "component_001::game_bonus.dart::GameBonus"
+"component_001::command.dart::Command" <|-- "component_001::command.dart::GameBonusDestroyCommand"
+
+class "component_001::command.dart::GameBonusCollisionCommand" {
+  +GameBonus target
+  +Collidable collisionObject
+  +void execute()
+  +String getTitle()
+}
+
+"component_001::command.dart::GameBonusCollisionCommand" o-- "component_001::game_bonus.dart::GameBonus"
+"component_001::command.dart::GameBonusCollisionCommand" o-- "flame::src::components::mixins::collidable.dart::Collidable"
+"component_001::command.dart::Command" <|-- "component_001::command.dart::GameBonusCollisionCommand"
+
+class "component_001::command.dart::ExplosionOfSpacehipRenderCommand" {
+  +void execute()
+  +String getTitle()
+}
+
+"component_001::command.dart::Command" <|-- "component_001::command.dart::ExplosionOfSpacehipRenderCommand"
+
+class "component_001::command.dart::ExplosionOfDestroyedAsteroidRenderCommand" {
+  -Asteroid _target
+  +void execute()
+  +String getTitle()
+}
+
+"component_001::command.dart::ExplosionOfDestroyedAsteroidRenderCommand" o-- "component_001::asteroid.dart::Asteroid"
+"component_001::command.dart::Command" <|-- "component_001::command.dart::ExplosionOfDestroyedAsteroidRenderCommand"
+
+class "component_001::command.dart::ExplosionOfSplitAsteroidRenderCommand" {
+  -Asteroid _target
+  +void execute()
+  +String getTitle()
+}
+
+"component_001::command.dart::ExplosionOfSplitAsteroidRenderCommand" o-- "component_001::asteroid.dart::Asteroid"
+"component_001::command.dart::Command" <|-- "component_001::command.dart::ExplosionOfSplitAsteroidRenderCommand"
+
+class "component_001::command.dart::ExplosionOfGameBonusRenderCommand" {
+  -GameBonus _target
+  +void execute()
+  +String getTitle()
+}
+
+"component_001::command.dart::ExplosionOfGameBonusRenderCommand" o-- "component_001::game_bonus.dart::GameBonus"
+"component_001::command.dart::Command" <|-- "component_001::command.dart::ExplosionOfGameBonusRenderCommand"
+
+class "component_001::controller.dart::Controller" {
+  {static} +int defaultNumberOfLives
+  {static} +int defaultStartLevel
+  {static} +int timeoutPauseInSeconds
+  -int _pauseCountdown
+  -bool _levelDoneFlag
+  -int _respawnCountdown
+  -bool _playerDiedFlag
+  -Broker _broker
+  -JoystickComponent _joystick
+  -List<GameLevel> _gameLevels
+  -int _currentGameLevelIndex
+  +List<dynamic> currLevelObjectStack
+  +dynamic jsonData
+  -Vector2 _baseResolution
+  -Vector2 _resolutionMultiplier
+  -ScoreBoard _scoreboard
+  +SpaceShip player
+  +Images images
+  +List<GameLevel> getLevels
+  +Vector2 getBaseResolution
+  +Vector2 getResoltionMultiplier
+  +ScoreBoard getScoreBoard
+  +SpaceShip getSpaceship()
+  +Images getImagesBroker()
+  +dynamic init()
+  +void timerNotification()
+  +void update()
+  +dynamic onLoad()
+  +void addCommand()
+  +void loadNextGameLevel()
+  +void spawnNewPlayer()
+  +bool isCurrLevelFinished()
+  +bool shouldRespawnPlayer()
+}
+
+"component_001::controller.dart::Controller" o-- "component_001::command.dart::Broker"
+"component_001::controller.dart::Controller" o-- "flame::src::components::input::joystick_component.dart::JoystickComponent"
+"component_001::controller.dart::Controller" o-- "vector_math::vector_math_64.dart::Vector2"
+"component_001::controller.dart::Controller" o-- "component_001::scoreboard.dart::ScoreBoard"
+"component_001::controller.dart::Controller" o-- "component_001::spaceship.dart::SpaceShip"
+"component_001::controller.dart::Controller" o-- "flame::src::assets::images.dart::Images"
+"flame::src::components::component.dart::Component" <|-- "component_001::controller.dart::Controller"
+"flame::src::components::mixins::has_game_ref.dart::HasGameRef" <|-- "component_001::controller.dart::Controller"
+
+class "component_001::controller.dart::GameLevel" {
+  +List<AsteroidBuildContext> asteroidConfig
+  +List<GameBonusBuildContext> gameBonusConfig
+  -Map<int, GameBonusBuildContext> _gameBonusMap
+  +void init()
+  +bool shouldSpawnBonus()
+  +GameBonusBuildContext? getBonus()
+  +String toString()
+}
+
+abstract class "component_001::game_bonus.dart::GameBonus" {
+  {static} +double defaultSpeed
+  {static} +int defaultDamage
+  {static} +int defaultHealth
+  {static} +Vector2 defaultSize
+  -Vector2 _velocity
+  -double _speed
+  -int? _health
+  -int? _damage
+  -Vector2 _resolutionMultiplier
+  -int _triggerTimeSeconds
+  +int? getDamage
+  +int? getHealth
+  +int? getTriggerTime
+  +void onCreate()
+  +void onDestroy()
+  +void onHit()
+  +void update()
+  +void onCollision()
+  -void _onOutOfBounds()
+}
+
+"component_001::game_bonus.dart::GameBonus" o-- "vector_math::vector_math_64.dart::Vector2"
+"flame::src::components::position_component.dart::PositionComponent" <|-- "component_001::game_bonus.dart::GameBonus"
+"flame::src::components::mixins::hitbox.dart::HasHitboxes" <|-- "component_001::game_bonus.dart::GameBonus"
+"flame::src::components::mixins::collidable.dart::Collidable" <|-- "component_001::game_bonus.dart::GameBonus"
+"flame::src::components::mixins::has_game_ref.dart::HasGameRef" <|-- "component_001::game_bonus.dart::GameBonus"
+
+class "component_001::game_bonus.dart::UFOGameBonus" {
+  {static} +Vector2 defaultSize
+  {static} -Paint _paint
+  +dynamic onLoad()
+  +void render()
+  +void update()
+  +void onCreate()
+  +void onDestroy()
+  +void onHit()
+}
+
+"component_001::game_bonus.dart::UFOGameBonus" o-- "vector_math::vector_math_64.dart::Vector2"
+"component_001::game_bonus.dart::UFOGameBonus" o-- "dart::ui::Paint"
+"component_001::game_bonus.dart::GameBonus" <|-- "component_001::game_bonus.dart::UFOGameBonus"
+
+class "component_001::game_bonus.dart::GameBonusFactory" {
+  {static} +GameBonus? create()
+}
+
+class "component_001::game_bonus.dart::GameBonusBuildContext" {
+  {static} +double defaultSpeed
+  {static} +int defaultHealth
+  {static} +int defaultDamage
+  {static} +Vector2 deaultVelocity
+  {static} +Vector2 deaultPosition
+  {static} +Vector2 defaultSize
+  {static} +Vector2 defaultMultipier
+  {static} +GameBonusEnum defaultGameBonusType
+  {static} +int defaultTimeTriggerSeconds
+  +double speed
+  +Vector2 velocity
+  +Vector2 position
+  +Vector2 size
+  +int health
+  +int damage
+  +Vector2 multiplier
+  +GameBonusEnum gameBonusType
+  +int timeTriggerSeconds
+  {static} +GameBonusEnum gameBonusFromString()
+  +String toString()
+}
+
+"component_001::game_bonus.dart::GameBonusBuildContext" o-- "vector_math::vector_math_64.dart::Vector2"
+"component_001::game_bonus.dart::GameBonusBuildContext" o-- "component_001::game_bonus.dart::GameBonusEnum"
+
+class "component_001::game_bonus.dart::GameBonusEnum" {
+  +int index
+  {static} +List<GameBonusEnum> values
+  {static} +GameBonusEnum ufoBonus
+}
+
+"component_001::game_bonus.dart::GameBonusEnum" o-- "component_001::game_bonus.dart::GameBonusEnum"
+"dart::core::Enum" <|-- "component_001::game_bonus.dart::GameBonusEnum"
+
+class "component_001::json_utils.dart::JSONUtils" {
+  {static} +dynamic readJSONInitData()
+  {static} +List<GameLevel> extractGameLevels()
+  {static} +Vector2 extractBaseGameResolution()
+  {static} -List<AsteroidBuildContext> _buildAsteroidData()
+  {static} -List<GameBonusBuildContext> _buildGameBonusData()
+}
+
+class "component_001::main.dart::CaseStudy008DesignPatterns004" {
+  {static} +String description
+  +bool debugMode
+  +Controller controller
+  +TimerComponent controllerTimer
+  +TextPaint shipAngleTextPaint
+  +dynamic onLoad()
+  +void update()
+  +void onTapUp()
+  +void loadResources()
+}
+
+"component_001::main.dart::CaseStudy008DesignPatterns004" o-- "component_001::controller.dart::Controller"
+"component_001::main.dart::CaseStudy008DesignPatterns004" o-- "flame::src::components::timer_component.dart::TimerComponent"
+"component_001::main.dart::CaseStudy008DesignPatterns004" o-- "flame::src::text.dart::TextPaint"
+"flame::src::game::flame_game.dart::FlameGame" <|-- "component_001::main.dart::CaseStudy008DesignPatterns004"
+"flame::src::components::mixins::draggable.dart::HasDraggables" <|-- "component_001::main.dart::CaseStudy008DesignPatterns004"
+"flame::src::components::mixins::tappable.dart::HasTappables" <|-- "component_001::main.dart::CaseStudy008DesignPatterns004"
+"flame::src::game::mixins::has_collidables.dart::HasCollidables" <|-- "component_001::main.dart::CaseStudy008DesignPatterns004"
+
+abstract class "component_001::particle_utils.dart::Explosion" {
+  {static} +double defaultLifespan
+  {static} +int defaultParticleCount
+  {static} +Vector2 deaultPosition
+  {static} +Vector2 defaultSize
+  {static} +ExplosionEnum defaultExplosionType
+  {static} +Vector2 defaultMultiplier
+  -double _lifespan
+  -Vector2 _position
+  -Vector2 _size
+  -int _particleCount
+  -Vector2 _resolutionMultiplier
+  -Images? _images
+  +dynamic onCreate()
+  +void onHit()
+  +ParticleComponent getParticleSimulation()
+  +String toString()
+}
+
+"component_001::particle_utils.dart::Explosion" o-- "vector_math::vector_math_64.dart::Vector2"
+"component_001::particle_utils.dart::Explosion" o-- "component_001::particle_utils.dart::ExplosionEnum"
+"component_001::particle_utils.dart::Explosion" o-- "flame::src::assets::images.dart::Images"
+
+class "component_001::particle_utils.dart::ParticleExplosion360" {
+  {static} +double defaultLifespan
+  {static} +Vector2 defaultSize
+  {static} +int defaultParticleCount
+  {static} -Paint _paint
+  +void onHit()
+  +dynamic onCreate()
+  +ParticleComponent getParticleSimulation()
+}
+
+"component_001::particle_utils.dart::ParticleExplosion360" o-- "vector_math::vector_math_64.dart::Vector2"
+"component_001::particle_utils.dart::ParticleExplosion360" o-- "dart::ui::Paint"
+"component_001::particle_utils.dart::Explosion" <|-- "component_001::particle_utils.dart::ParticleExplosion360"
+
+class "component_001::particle_utils.dart::ParticleBonusExplosion" {
+  {static} +double defaultLifespan
+  {static} +Vector2 defaultSize
+  {static} +int defaultParticleCount
+  {static} -Paint _paint
+  +void onHit()
+  +dynamic onCreate()
+  +ParticleComponent getParticleSimulation()
+}
+
+"component_001::particle_utils.dart::ParticleBonusExplosion" o-- "vector_math::vector_math_64.dart::Vector2"
+"component_001::particle_utils.dart::ParticleBonusExplosion" o-- "dart::ui::Paint"
+"component_001::particle_utils.dart::Explosion" <|-- "component_001::particle_utils.dart::ParticleBonusExplosion"
+
+class "component_001::particle_utils.dart::FieryExplosion" {
+  {static} +double defaultLifespan
+  {static} +Vector2 defaultSize
+  {static} -Paint _paint
+  +void onHit()
+  +dynamic onCreate()
+  +ParticleComponent getParticleSimulation()
+  -SpriteAnimation _getBoomAnimation()
+}
+
+"component_001::particle_utils.dart::FieryExplosion" o-- "vector_math::vector_math_64.dart::Vector2"
+"component_001::particle_utils.dart::FieryExplosion" o-- "dart::ui::Paint"
+"component_001::particle_utils.dart::Explosion" <|-- "component_001::particle_utils.dart::FieryExplosion"
+
+class "component_001::particle_utils.dart::ExplosionFactory" {
+  {static} +ParticleComponent create()
+}
+
+class "component_001::particle_utils.dart::ExplosionBuildContext" {
+  {static} +double defaultLifespan
+  {static} +int defaultParticleCount
+  {static} +Vector2 deaultPosition
+  {static} +Vector2 defaultSize
+  {static} +ExplosionEnum defaultExplosionType
+  {static} +Vector2 defaultMultiplier
+  +double lifespan
+  +Vector2 position
+  +Vector2 size
+  +int particleCount
+  +Vector2 multiplier
+  +ExplosionEnum explosionType
+  +Images? images
+  {static} +ExplosionEnum explosionFromString()
+  +String toString()
+}
+
+"component_001::particle_utils.dart::ExplosionBuildContext" o-- "vector_math::vector_math_64.dart::Vector2"
+"component_001::particle_utils.dart::ExplosionBuildContext" o-- "component_001::particle_utils.dart::ExplosionEnum"
+"component_001::particle_utils.dart::ExplosionBuildContext" o-- "flame::src::assets::images.dart::Images"
+
+class "component_001::particle_utils.dart::ExplosionEnum" {
+  +int index
+  {static} +List<ExplosionEnum> values
+  {static} +ExplosionEnum largeParticleExplosion
+  {static} +ExplosionEnum mediumParticleExplosion
+  {static} +ExplosionEnum fieryExplosion
+  {static} +ExplosionEnum bonusExplosion
+}
+
+"component_001::particle_utils.dart::ExplosionEnum" o-- "component_001::particle_utils.dart::ExplosionEnum"
+"dart::core::Enum" <|-- "component_001::particle_utils.dart::ExplosionEnum"
+
+class "component_001::scoreboard.dart::ScoreBoard" {
+  -int _highScore
+  -int _numOfShotsFired
+  -int _score
+  -int _livesLeft
+  -int _currentLevel
+  -int _maxLevels
+  -int _timeSinceStartInSeconds
+  -int _timeSinceStartofLevelInSeconds
+  -TextPaint _livesLeftTextPaint
+  -TextPaint _passageOfTimePaint
+  -TextPaint _scorePaint
+  -TextPaint _highScorePaint
+  -TextPaint _shotsFiredPaint
+  -TextPaint _levelInfoPaint
+  +int highScore
+  +int lives
+  +int level
+  +int getLivesLeft
+  +int getCurrentLevel
+  +int getTimeSinceStart
+  +int getTimeSinceStartOfLevel
+  +int getScore
+  +int getHighScore
+  +void addBulletFired()
+  +void addBulletsFired()
+  +void addScorePoints()
+  +void removeLife()
+  +void addExtraLife()
+  +void addTimeTick()
+  +void resetLevelTimer()
+  +void progressLevel()
+  +void render()
+  +String toString()
+  +String formatNumberOfLives()
+  +String formatLevelData()
+}
+
+"component_001::scoreboard.dart::ScoreBoard" o-- "flame::src::text.dart::TextPaint"
+"flame::src::components::position_component.dart::PositionComponent" <|-- "component_001::scoreboard.dart::ScoreBoard"
+"flame::src::components::mixins::has_game_ref.dart::HasGameRef" <|-- "component_001::scoreboard.dart::ScoreBoard"
+
+abstract class "component_001::spaceship.dart::SpaceShip" {
+  {static} +double defaultSpeed
+  {static} +double defaultMaxSpeed
+  {static} +int defaultDamage
+  {static} +int defaultHealth
+  {static} +Vector2 defaultSize
+  -Vector2 _velocity
+  -double _speed
+  -int? _health
+  -int? _damage
+  -Vector2 _resolutionMultiplier
+  -double _maxSpeed
+  -BulletEnum _currBulletType
+  {static} -Paint _paint
+  -RectangleComponent _muzzleComponent
+  -JoystickComponent _joystick
+  +BulletEnum getBulletType
+  +RectangleComponent getMuzzleComponent
+  +void onCreate()
+  +void onDestroy()
+  +void onHit()
+  +Vector2 getNextPosition()
+}
+
+"component_001::spaceship.dart::SpaceShip" o-- "vector_math::vector_math_64.dart::Vector2"
+"component_001::spaceship.dart::SpaceShip" o-- "component_001::bullet.dart::BulletEnum"
+"component_001::spaceship.dart::SpaceShip" o-- "dart::ui::Paint"
+"component_001::spaceship.dart::SpaceShip" o-- "flame::src::components::shape_component.dart::RectangleComponent"
+"component_001::spaceship.dart::SpaceShip" o-- "flame::src::components::input::joystick_component.dart::JoystickComponent"
+"flame::src::components::sprite_component.dart::SpriteComponent" <|-- "component_001::spaceship.dart::SpaceShip"
+"flame::src::components::mixins::has_game_ref.dart::HasGameRef" <|-- "component_001::spaceship.dart::SpaceShip"
+"flame::src::components::mixins::hitbox.dart::HasHitboxes" <|-- "component_001::spaceship.dart::SpaceShip"
+"flame::src::components::mixins::collidable.dart::Collidable" <|-- "component_001::spaceship.dart::SpaceShip"
+
+class "component_001::spaceship.dart::SimpleSpaceShip" {
+  {static} +double defaultSpeed
+  {static} +Vector2 defaultSize
+  {static} -Paint _paint
+  +dynamic onLoad()
+  +void update()
+  +void onCreate()
+  +void onDestroy()
+  +void onHit()
+}
+
+"component_001::spaceship.dart::SimpleSpaceShip" o-- "vector_math::vector_math_64.dart::Vector2"
+"component_001::spaceship.dart::SimpleSpaceShip" o-- "dart::ui::Paint"
+"component_001::spaceship.dart::SpaceShip" <|-- "component_001::spaceship.dart::SimpleSpaceShip"
+
+class "component_001::spaceship.dart::SpaceShipFactory" {
+  {static} +SpaceShip create()
+}
+
+class "component_001::spaceship.dart::PlayerBuildContext" {
+  {static} +double defaultSpeed
+  {static} +int defaultHealth
+  {static} +int defaultDamage
+  {static} +Vector2 deaultVelocity
+  {static} +Vector2 deaultPosition
+  {static} +Vector2 defaultSize
+  {static} +SpaceShipEnum defaultSpaceShipType
+  {static} +Vector2 defaultMultiplier
+  +double speed
+  +Vector2 velocity
+  +Vector2 position
+  +Vector2 size
+  +int health
+  +int damage
+  +Vector2 multiplier
+  +SpaceShipEnum spaceShipType
+  +JoystickComponent joystick
+  {static} +SpaceShipEnum spaceShipFromString()
+  +String toString()
+}
+
+"component_001::spaceship.dart::PlayerBuildContext" o-- "vector_math::vector_math_64.dart::Vector2"
+"component_001::spaceship.dart::PlayerBuildContext" o-- "component_001::spaceship.dart::SpaceShipEnum"
+"component_001::spaceship.dart::PlayerBuildContext" o-- "flame::src::components::input::joystick_component.dart::JoystickComponent"
+
+class "component_001::spaceship.dart::SpaceShipEnum" {
+  +int index
+  {static} +List<SpaceShipEnum> values
+  {static} +SpaceShipEnum simpleSpaceShip
+}
+
+"component_001::spaceship.dart::SpaceShipEnum" o-- "component_001::spaceship.dart::SpaceShipEnum"
+"dart::core::Enum" <|-- "component_001::spaceship.dart::SpaceShipEnum"
+
+class "component_001::utils.dart::Utils" {
+  {static} +Vector2 randomVector()
+  {static} +Vector2 generateRandomPosition()
+  {static} +Vector2 generateRandomVelocity()
+  {static} +Vector2 generateRandomDirection()
+  {static} +double generateRandomSpeed()
+  {static} +bool isPositionOutOfBounds()
+  {static} +Vector2 wrapPosition()
+  {static} +Vector2 vector2Multiply()
+}
+
+
+@enduml

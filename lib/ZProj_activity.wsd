@@ -1,0 +1,29 @@
+@startuml
+skin rose
+
+start
+:Menampilkan Game; 
+while (Daya Hidup > 0 ?)  is (Yes)
+  fork
+    :Menggerakkan Pesawat;
+    if (Tertabrak?) then (yes)
+      :Kurangi Daya Hidup;   
+    endif
+  fork again
+    :Menembakkan Peluru;
+    if (Berhasil?) then (yes)
+      :Tambah Poin;   
+    endif
+  end fork
+    
+  if (Pause?) then (yes)
+      :Menghentikan Sementara Game;   
+  endif
+
+endwhile (No)
+
+:Mengakhiri Game ;
+
+
+
+@enduml
